@@ -1,42 +1,42 @@
 package com.company;
 
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
-import org.json.simple.JSONArray;
-import org.json.simple.parser.*;
-import org.json.simple.JSONObject;
+
+//TODO make menu and present a pretty UI........ the display of meanings sucks ass
 
 public class Main {
-
-    static List<Word> dictionary;
-
-    public static void main(String[] args) {
-        getWordList();
-        System.out.println(dictionary.get(0).getSynonyms().toString());
-    }
+    static ArrayList<String> list;
+    static Map<String, Object> wordMap;
+    static int length;
 
 
-    public static void getWordList() {
-        int i = 0;
-        try {
-            for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
-                Object obj = new JSONParser().parse(new FileReader("C:\\Users\\Radhika\\IdeaProjects\\Word Dictionary\\" +
-                        "res\\data\\D" + alphabet + ".json"));
-                JSONObject jo = (JSONObject) obj;
-                dictionary = new ArrayList<>();
-                Word a = new Word();
-                dictionary.add(a);
-                JSONArray synonyms = (JSONArray) jo.get("SYNONYMS");
-                String[] syn = {(String) synonyms.get(0), (String) synonyms.get(1), (String) synonyms.get(2)};
-                dictionary.get(0).setSynonyms(syn);
-            }// TODO maybe need to get the parent first(word) then the childs(meanings, antonym, synonym)
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static void main(String[] args) throws Exception {
+        GetList obj = new GetList();
+        Sort sorter = new Sort();
+        Search searcher = new Search();
+
+        wordMap = obj.getList();
+        list = new ArrayList<>(wordMap.keySet());
+
+        sorter.sort(list);
+        for (String word : list){
+            System.out.println(word);
         }
 
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a word to search: ");
+        String input = scanner.nextLine();
+
+        searcher.binarySearch(list,input);
+
+        int index = searcher.binarySearch(list, input);
+        if (index == -1) {
+            System.out.println(input + " not found! Please try another word.");
+        } else {
+            System.out.println(input + ": " + wordMap.get(input));
+        }
     }
 }
