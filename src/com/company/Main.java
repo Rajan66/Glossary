@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -22,17 +23,15 @@ public class Main {
         list = new ArrayList<>(wordMap.keySet());
 
         sorter.sort(list);
-        for (String word : list){
-            System.out.println(word);
-        }
+//        for (String word : list){
+//            System.out.println(word);
+//        }
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a word to search: ");
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().toLowerCase();
 
-        searcher.binarySearch(list,input);
-
-        int index = searcher.binarySearch(list, input);
+        int index = searcher.binarySearch(list,input);
         if (index == -1) {
             System.out.println(input + " not found! Please try another word.");
         } else {
