@@ -3,15 +3,14 @@ package com.company;
 import java.util.ArrayList;
 
 import static com.company.Main.*;
+
 public class Sort {
-
-
-    public void sort(ArrayList<String> array) {
-        if (array == null || array.size() == 0) {
+    public void sort(ArrayList<Words> books) {
+        if (books == null || books.size() == 0) {
             return;
         }
-        list = array;
-        length = array.size();
+        wordList = books;
+        length = books.size();
         quickSort(0, length - 1);
     }
 
@@ -19,16 +18,16 @@ public class Sort {
         int i = lowerIndex;
         int j = higherIndex;
 
-        String pivot = list.get(lowerIndex + (higherIndex - lowerIndex) / 2).replaceAll("\\s+", "");
+        String pivot = wordList.get(lowerIndex + (higherIndex - lowerIndex) / 2).getWord().replaceAll("\\s+", "");
 
         while (i <= j) {
 
-            while (list.get(i).replaceAll("\\s+", "").compareToIgnoreCase(pivot) < 0) {
+            while (wordList.get(i).getWord().replaceAll("\\s+", "").compareToIgnoreCase(pivot) < 0) {
                 i++;
 
             }
 
-            while (list.get(j).replaceAll("\\s+", "").compareToIgnoreCase(pivot) > 0) {
+            while (wordList.get(j).getWord().replaceAll("\\s+", "").compareToIgnoreCase(pivot) > 0) {
                 j--;
 
             }
@@ -49,8 +48,8 @@ public class Sort {
     }
 
     public void swap(int i, int j) {
-        String temp = list.get(i);
-        list.set(i, list.get(j));
-        list.set(j, temp);
+        Words temp = wordList.get(i);
+        wordList.set(i, wordList.get(j));
+        wordList.set(j, temp);
     }
 }
